@@ -8,7 +8,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 class Operator(models.Model):
     name = models.CharField(max_length=32)
-    index = models.IntegerField()
+    index = models.IntegerField(unique=True)
 
     created_date = models.DateTimeField(auto_now_add=True)
     changed_date = models.DateTimeField(auto_now=True)
@@ -61,7 +61,7 @@ class Mailing(models.Model):
     )
 
     def __str__(self):
-        return f'{self.start_date}-{self.stop_date} {self.message[:20]}...'
+        return f'{self.start_date}-{self.stop_date} {self.message_text[:20]}...'
 
     def save(self, *args, **kwargs):
         if not self.stop_date:
@@ -75,7 +75,7 @@ class Mailing(models.Model):
 
 class Customer(models.Model):
     phone = models.IntegerField(validators=[MinValueValidator(70000000000), MaxValueValidator(79999999999)])
-    operator = models.ForeignKey(Operator, on_delete=models.SET_NULL, blank=True, null=True)
+    operator = models.ForeignKey(Operator, on_delete=models.SET_NULL, null=True)
     tag = models.ForeignKey(Tag, on_delete=models.SET_NULL, blank=True, null=True)
 
     TIMEZONES = tuple(zip(pytz.common_timezones, pytz.common_timezones))
@@ -97,9 +97,9 @@ class Customer(models.Model):
 
 
 class Message(models.Model):
-    is_sent = models.BooleanField(default=False)
-    mailing = models.ForeignKey(Mailing, on_delete=models.SET_NULL, blank=True, null=True)
-    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)
+    mailing = models.ForeignKey(Mailing, on_delete=models.SET_NULL, null=True)
+    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
+    status = models.IntegerField()
 
     created_date = models.DateTimeField(auto_now_add=True)
     changed_date = models.DateTimeField(auto_now=True)
