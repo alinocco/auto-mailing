@@ -181,35 +181,3 @@ class MessageAdmin(admin.ModelAdmin):
     search_fields = ('mailing', 'customer')
 
     readonly_fields = ('created_date', 'changed_date')
-
-
-# @admin.register(MailingStatistics)
-# class MailingStatisticsAdmin(admin.ModelAdmin):
-#     list_display = ('mailing',)
-
-#     list_filter = ('mailing',)
-
-#     fieldsets = (
-#         (
-#             None,
-#             {
-#                 'fields': (
-#                     'mailing',
-#                 )
-#             }
-#         ),
-#         (
-#             'Служебная информация',
-#             {
-#                 'fields': (
-#                     'created_date',
-#                     'changed_date',
-#                 )
-#             }
-#         ),
-#     )
-
-#     search_fields = ('mailing')
-
-#     readonly_fields = ('created_date', 'changed_date',)
-
