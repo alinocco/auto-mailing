@@ -133,14 +133,3 @@ class Message(models.Model):
 
     class Meta:
         ordering = ['status']
-
-
-# class MailingStatistics(models.Model):
-#     mailing = models.ForeignKey(Mailing, on_delete=models.SET_NULL)
-    
-#     @property
-#     def messages(self):
-#         return Message.objects.filter(mailing=self.mailing)
-
-#     class Meta:
-#         ordering=['mailing']
