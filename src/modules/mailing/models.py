@@ -1,5 +1,5 @@
 import uuid
-from datetime import datetime, timedelta
+from datetime import timedelta
 import pytz
 
 from django.db import models
@@ -11,8 +11,10 @@ from django.core.validators import (
 from django.utils import timezone
 
 class Operator(models.Model):
-    name = models.CharField(max_length=32)
-    index = models.IntegerField(unique=True)
+    name = models.CharField(
+        max_length=32,
+        unique=True
+        )
 
     created_date = models.DateTimeField(auto_now_add=True)
     changed_date = models.DateTimeField(auto_now=True)

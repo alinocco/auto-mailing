@@ -12,7 +12,7 @@ from .models import (
 
 @admin.register(Operator)
 class OperatorAdmin(admin.ModelAdmin):
-    list_display = ('name', 'index')
+    list_display = ('name',)
 
     list_filter = ('name',)
 
@@ -21,8 +21,7 @@ class OperatorAdmin(admin.ModelAdmin):
             None,
             {
                 'fields': (
-                    ('name',
-                    'index'),
+                    'name',
                 )
             }
         ),
@@ -37,7 +36,7 @@ class OperatorAdmin(admin.ModelAdmin):
         ),
     )
 
-    search_fields = ('name', 'index')
+    search_fields = ('name',)
 
     readonly_fields = ('created_date', 'changed_date',)
 
