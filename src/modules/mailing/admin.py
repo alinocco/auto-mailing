@@ -74,9 +74,9 @@ class TagAdmin(admin.ModelAdmin):
 
 @admin.register(Mailing)
 class MailingAdmin(admin.ModelAdmin):
-    list_display = ('start_date', 'stop_date', 'message_text', 'operator', 'tag')
+    list_display = ('start_date', 'stop_date', 'message_text', 'operator', 'tag', 'is_started', 'is_completed')
 
-    list_filter = ('start_date', 'operator', 'tag')
+    list_filter = ('start_date', 'operator', 'tag', 'is_started', 'is_completed')
 
     fieldsets = (
         (
@@ -104,6 +104,8 @@ class MailingAdmin(admin.ModelAdmin):
                 'fields': (
                     'created_date',
                     'changed_date',
+                    ('is_started',
+                    'is_completed'),
                 )
             }
         ),
@@ -111,7 +113,7 @@ class MailingAdmin(admin.ModelAdmin):
 
     search_fields = ('message_text', 'operator', 'tag')
 
-    readonly_fields = ('created_date', 'changed_date',)
+    readonly_fields = ('created_date', 'changed_date', 'is_started', 'is_completed')
 
 
 @admin.register(Customer)

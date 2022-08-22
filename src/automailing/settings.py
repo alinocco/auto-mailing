@@ -122,12 +122,16 @@ CELERY_BROKER_URL = 'redis://localhost:6379'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 
-# CELERY_BEAT_SCHEDULE = {
-#     'synchronize-file-with-database': {
-#         'task': 'modules.mailings.tasks.synchronize_file_with_database',
-#         'schedule': timedelta(minutes=1),
-#     },
-# }
+CELERY_BEAT_SCHEDULE = {
+    'activate-mailings': {
+        'task': 'modules.mailing.tasks.activate_mailings',
+        'schedule': timedelta(minutes=1),
+    },
+}
+
+# API
+# https://probe.fbrq.cloud/docs#
+API_TOKEN = env('API_TOKEN')
 
 
 # Internationalization

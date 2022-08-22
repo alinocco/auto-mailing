@@ -61,6 +61,9 @@ class Mailing(models.Model):
     operator = models.ForeignKey(Operator, on_delete=models.SET_NULL, blank=True, null=True)
     tag = models.ForeignKey(Tag, on_delete=models.SET_NULL, blank=True, null=True)
 
+    is_started = models.BooleanField(default=False)
+    is_completed = models.BooleanField(default=False)
+
     created_date = models.DateTimeField(auto_now_add=True)
     changed_date = models.DateTimeField(auto_now=True)
     uuid = models.UUIDField(

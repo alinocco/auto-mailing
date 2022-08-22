@@ -110,7 +110,7 @@ class CustomerSerializer(NestedUpdateMixin, serializers.ModelSerializer):
 
 class MessageSerializer(serializers.ModelSerializer):
     mailing = MailingSerializer()
-    operator = OperatorSerializer()
+    customer = CustomerSerializer()
 
     class Meta:
         model = Message
