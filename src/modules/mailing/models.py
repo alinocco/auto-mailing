@@ -3,8 +3,12 @@ from datetime import datetime, timedelta
 import pytz
 
 from django.db import models
-from django.core.validators import MinValueValidator, MaxValueValidator
-
+from django.core.validators import (
+    MinValueValidator,
+    MinLengthValidator, 
+    RegexValidator,
+)
+from django.utils import timezone
 
 class Operator(models.Model):
     name = models.CharField(max_length=32)
@@ -45,9 +49,12 @@ class Tag(models.Model):
 
 class Mailing(models.Model):
     start_date = models.DateTimeField(
-        default=datetime.now(),
-        validators=[MinValueValidator(datetime.now())])
-    stop_date = models.DateTimeField(blank=True, null=True)
+        default=timezone.now(),
+        validators=[MinValueValidator(timezone.now())])
+    stop_date = models.DateTimeField(
+        validators=[MinValueValidator(timezone.now())],
+        blank=True, 
+        null=True)
     message_text = models.TextField()
     operator = models.ForeignKey(Operator, on_delete=models.SET_NULL, blank=True, null=True)
     tag = models.ForeignKey(Tag, on_delete=models.SET_NULL, blank=True, null=True)
@@ -74,7 +81,14 @@ class Mailing(models.Model):
 
 
 class Customer(models.Model):
-    phone = models.IntegerField(validators=[MinValueValidator(70000000000), MaxValueValidator(79999999999)])
+    phone = models.CharField(
+        max_length=11, 
+        validators=[
+            MinLengthValidator(11), 
+            RegexValidator(r'^7([0-9]{10})',
+            'It must be in form 7XXXXXXXXXX.')
+            ]
+        )
     operator = models.ForeignKey(Operator, on_delete=models.SET_NULL, null=True)
     tag = models.ForeignKey(Tag, on_delete=models.SET_NULL, blank=True, null=True)
 
@@ -113,4 +127,15 @@ class Message(models.Model):
         return f'{self.created_date} {self.mailing} to {self.customer}'
 
     class Meta:
-        ordering = ['is_sent']
+        ordering = ['status']
+
+
+# class MailingStatistics(models.Model):
+#     mailing = models.ForeignKey(Mailing, on_delete=models.SET_NULL)
+    
+#     @property
+#     def messages(self):
+#         return Message.objects.filter(mailing=self.mailing)
+
+#     class Meta:
+#         ordering=['mailing']

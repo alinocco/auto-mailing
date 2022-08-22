@@ -6,6 +6,7 @@ from .models import (
     Mailing,
     Customer,
     Message,
+    # MailingStatistics,
 )
 
 
@@ -150,9 +151,9 @@ class CustomerAdmin(admin.ModelAdmin):
 
 @admin.register(Message)
 class MessageAdmin(admin.ModelAdmin):
-    list_display = ('created_date', 'mailing', 'customer', 'is_sent')
+    list_display = ('created_date', 'mailing', 'customer', 'status')
 
-    list_filter = ('created_date', 'mailing', 'customer', 'is_sent')
+    list_filter = ('created_date', 'mailing', 'customer', 'status')
 
     fieldsets = (
         (
@@ -161,6 +162,7 @@ class MessageAdmin(admin.ModelAdmin):
                 'fields': (
                     ('mailing',
                     'customer'),
+                    'status',
                 )
             }
         ),
@@ -170,7 +172,6 @@ class MessageAdmin(admin.ModelAdmin):
                 'fields': (
                     'created_date',
                     'changed_date',
-                    'is_sent',
                 )
             }
         ),
@@ -178,4 +179,36 @@ class MessageAdmin(admin.ModelAdmin):
 
     search_fields = ('mailing', 'customer')
 
-    readonly_fields = ('created_date', 'changed_date', 'is_sent')
+    readonly_fields = ('created_date', 'changed_date')
+
+
+# @admin.register(MailingStatistics)
+# class MailingStatisticsAdmin(admin.ModelAdmin):
+#     list_display = ('mailing',)
+
+#     list_filter = ('mailing',)
+
+#     fieldsets = (
+#         (
+#             None,
+#             {
+#                 'fields': (
+#                     'mailing',
+#                 )
+#             }
+#         ),
+#         (
+#             'Служебная информация',
+#             {
+#                 'fields': (
+#                     'created_date',
+#                     'changed_date',
+#                 )
+#             }
+#         ),
+#     )
+
+#     search_fields = ('mailing')
+
+#     readonly_fields = ('created_date', 'changed_date',)
+
