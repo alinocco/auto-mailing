@@ -1,0 +1,29 @@
+version: "3.2"
+
+services:
+  db:
+    image: postgres:13
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_DB: automailing
+      POSTGRES_USER: automailing
+      POSTGRES_PASSWORD: automailing
+
+  redis:
+    image: redis:6.2.6
+    ports:
+      - "6379:6379"
+    restart: on-failure
+
+  adminer:
+    image: adminer
+    ports:
+      - "8220:8080"
+    links:
+      - db
+
+volumes:
+  postgres_data:
