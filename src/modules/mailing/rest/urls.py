@@ -12,5 +12,7 @@ router.register(r'tags', views.TagViewSet, basename='tag')
 router.register(r'messages', views.MessageViewSet, basename='message')
 
 urlpatterns = [
-    path('', include(router.urls))
+    path('', include(router.urls)),
+    path('get_statistics_for_all_mailings/', views.get_statistics_for_all_mailings, name='get_statistics_for_all_mailings'),
+    path('get_statistics_for_mailing/<uuid:mailing_uuid>/', views.get_statistics_for_mailing, name='get_statistics_for_mailing')
 ]
